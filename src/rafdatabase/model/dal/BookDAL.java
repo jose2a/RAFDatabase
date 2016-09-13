@@ -1,6 +1,7 @@
 package rafdatabase.model.dal;
 
 import rafdatabase.model.dal.datastructures.BinarySearchTree;
+import rafdatabase.model.dal.datastructures.TreeNode;
 import rafdatabase.model.dol.Book;
 import rafdatabase.model.dal.datastructures.BookIndex;
 import rafdatabase.model.dal.files.BookIndexFile;
@@ -21,11 +22,34 @@ public class BookDAL {
 
     public BookDAL() {
         List<BookIndex> bookIndices = BookIndexFile.loadBookIndexFile();
-        Collections.shuffle(bookIndices, new Random(System.nanoTime()));
+        indicesTree = createBST(bookIndices);
+        //Collections.shuffle(bookIndices, new Random(System.nanoTime()));
 
-        this.indicesTree.insertNodes(bookIndices);
+        //this.indicesTree.insertNodes(bookIndices);
 
         this.lastId = BookIndexFile.loadLastId();
+    }
+
+    private BinarySearchTree<BookIndex> createBST(List<BookIndex> bookIndices) {
+        BinarySearchTree<BookIndex> tree = new BinarySearchTree<>();
+
+        tree.setRoot(createBST(bookIndices, 0, bookIndices.size()));
+        return  tree;
+    }
+
+    private TreeNode<BookIndex> createBST(List<BookIndex> bookIndices, int start, int end) {
+
+        if (start > end) {
+            return null;
+        }
+
+        int mid = (start + end) / 2;
+        TreeNode<BookIndex> root = new TreeNode<>(bookIndices.get(mid), null);
+
+        root.setLeft(createBST(bookIndices, start, mid - 1));
+        root.setRight(createBST(bookIndices, mid + 1, end));
+
+        return root;
     }
 
     public List<Book> getAll() {

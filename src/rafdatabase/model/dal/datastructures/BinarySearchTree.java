@@ -17,6 +17,15 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         root = null;
     }
 
+    public void setRoot(TreeNode<E> node) {
+
+        if (node == null) {
+            return;
+        }
+
+        this.root = node;
+    }
+
     /**
      * Find an element in the tree. In this case we can find an element even if the object is not complete.
      * The class used by the BST will implement the Comparable interface, that is where, we can specify how the

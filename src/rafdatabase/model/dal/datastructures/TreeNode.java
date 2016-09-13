@@ -32,25 +32,41 @@ public class TreeNode<E> {
     }
 
     public TreeNode<E> getLeftChild() {
-        return left;
+        return getLeft();
     }
 
     public TreeNode<E> addLeftChild(E data) {
-        this.left = new TreeNode<>(data, this);
-        return left;
+        this.setLeft(new TreeNode<>(data, this));
+        return getLeft();
     }
 
     public TreeNode<E> getRightChild() {
-        return right;
+        return getRight();
     }
 
     public TreeNode<E> addRightChild(E data) {
-        this.right = new TreeNode<>(data, this);
-        return right;
+        this.setRight(new TreeNode<>(data, this));
+        return getRight();
     }
 
     @Override
     public String toString() {
         return data.toString();
+    }
+
+    public TreeNode<E> getLeft() {
+        return left;
+    }
+
+    public void setLeft(TreeNode<E> left) {
+        this.left = left;
+    }
+
+    public TreeNode<E> getRight() {
+        return right;
+    }
+
+    public void setRight(TreeNode<E> right) {
+        this.right = right;
     }
 }
